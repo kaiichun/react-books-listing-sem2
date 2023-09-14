@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { bookData } from "./data/books";
+import { createArrowFunction } from "typescript";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -8,8 +9,15 @@ const BookList = () => {
   const categories = useMemo(() => {
     let options = [];
     /* Instruction: Get all categories from books */
+    bookData.forEach((book) => {
+      book.categories.forEach((category) => {
+        if (!options.includes(category)) {
+          options.push(category);
+        }
+      });
+    });
     return options;
-  }, [books]);
+  }, []);
 
   useEffect(() => {
     /* instruction: load books from the books data */
