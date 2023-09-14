@@ -47,7 +47,7 @@ const BookList = () => {
       {/* instruction: list books using .map() */}
       <div className="row">
         {books.map((book) => (
-          <div className="col-4 my-5" key={book.title}>
+          <div className="col-4 col-md-6 col-sm-12 my-5" key={book.title}>
             <div className="card">
               <img
                 src="../images/book.jpg"
