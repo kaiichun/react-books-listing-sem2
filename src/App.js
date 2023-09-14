@@ -2,7 +2,8 @@ import React, { useState, useEffect, useMemo } from "react";
 import { bookData } from "./data/books";
 
 const BookList = () => {
-  const [books, setBooks] = useState([]);
+  //Method 1 print out the data
+  const [books, setBooks] = useState(bookData);
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const categories = useMemo(() => {
@@ -10,24 +11,34 @@ const BookList = () => {
     /* Instruction: Get all categories from books */
     bookData.forEach((book) => {
       book.categories.forEach((category) => {
+        // to make sure the category is wasn't already in to the options
         if (!options.includes(category)) {
           options.push(category);
         }
       });
     });
     return options;
-  }, []);
+  }, [bookData]);
+
+  // Method 2 print out the data
+  // const [books, setBooks] = useState([]);
+  // useEffect(() => {
+  //   /* instruction: load books from the books data */
+  //   setBooks(bookData);
+  // }, []);
 
   useEffect(() => {
-    /* instruction: load books from the books data */
-    setBooks(bookData);
-  }, []);
-
-  useEffect(() => {
+    let newBooks = [...bookData];
     /* Instruction: filter books by selectedCategory */
-    /* Instruction: set filtered books to books state */
     /* Instruction: set books to all books if selectedCategory is empty */
-  }, [selectedCategory]);
+    if (selectedCategory !== "") {
+      newBooks = newBooks.filter((b) =>
+        b.categories.includes(selectedCategory)
+      );
+    }
+    /* Instruction: set filtered books to books state */
+    setBooks(newBooks);
+  }, [books, selectedCategory]);
 
   return (
     <div className="container">
@@ -50,7 +61,7 @@ const BookList = () => {
           <div className="col-lg-4 col-md-6 col-sm-12 my-5" key={book.title}>
             <div className="card">
               <img
-                src="../images/book.jpg"
+                src={"/images/" + book.image}
                 alt={book.title}
                 className="card-img-top"
               />
@@ -60,8 +71,17 @@ const BookList = () => {
                 <p className="card-text">
                   <span>
                     Category:
+                    {/* method 1
+                    {book.categories.map((category, index) => {
+                      return (index === 0 ? "" : ", ") + category;
+                    })} */}
+                    {""}
+                    {/* method 2
                     {book.categories.length > 0 &&
-                      ` ${book.categories.join(", ")}`}
+                      ` ${book.categories.join(", ")}`} */}
+                    {""}
+                    {/* method 3 */}
+                    {book.categories.join(", ")}
                   </span>
                 </p>
                 <p className="card-text">Year: {book.year}</p>
