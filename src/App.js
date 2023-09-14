@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { bookData } from "./data/books";
-import { createArrowFunction } from "typescript";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
